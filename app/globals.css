@@ -1,26 +1,173 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand-terracotta: #C1662F;
+  --brand-cream: #FAF8F5;
+  --brand-espresso: #1C3121;
+  --brand-espresso-dark: #122116;
+  --brand-espresso-card: #16291C;
+  --brand-sage: #5C6B4F;
+  --brand-gold: #D9A441;
+  --brand-gold-glow: rgba(217, 164, 65, 0.25);
+  
+  --background: var(--brand-cream);
+  --foreground: var(--brand-espresso);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-terracotta: var(--brand-terracotta);
+  --color-cream: var(--brand-cream);
+  --color-espresso: var(--brand-espresso);
+  --color-espresso-dark: var(--brand-espresso-dark);
+  --color-espresso-card: var(--brand-espresso-card);
+  --color-sage: var(--brand-sage);
+  --color-gold: var(--brand-gold);
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 84px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--brand-cream);
+  color: var(--brand-espresso);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  overflow-x: hidden;
 }
+
+::selection {
+  background: var(--brand-terracotta);
+  color: var(--brand-cream);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1A130E;
+}
+::-webkit-scrollbar-thumb {
+  background: #C1662F;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D9A441;
+}
+
+/* Liquid Shimmer & Glow Effects */
+.liquid-metal-btn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #C1662F 0%, #E07D3E 50%, #C1662F 100%);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(193, 102, 47, 0.35);
+}
+
+.liquid-metal-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(217, 164, 65, 0.4) 45%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(217, 164, 65, 0.4) 55%,
+    transparent 100%
+  );
+  transform: rotate(30deg) translateY(-100%);
+  transition: transform 0.8s ease;
+}
+
+.liquid-metal-btn:hover::before {
+  transform: rotate(30deg) translateY(100%);
+}
+
+.liquid-metal-btn:hover {
+  box-shadow: 0 8px 30px rgba(217, 164, 65, 0.5), 0 0 15px rgba(193, 102, 47, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Steam Wisp Keyframes */
+@keyframes steamRise {
+  0% {
+    transform: translateY(0) scaleX(1) scaleY(1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-40px) scaleX(1.3) scaleY(1.2);
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-90px) scaleX(1.8) scaleY(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-steam-1 {
+  animation: steamRise 4s ease-in-out infinite;
+}
+.animate-steam-2 {
+  animation: steamRise 5s ease-in-out infinite 1.5s;
+}
+.animate-steam-3 {
+  animation: steamRise 4.5s ease-in-out infinite 2.8s;
+}
+
+/* Paper Grain Texture Overlay */
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* Marquee Scroll */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Glassmorphism primitives */
+.glass-card {
+  background: rgba(35, 26, 20, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(217, 164, 65, 0.15);
+}
+
+.glass-nav {
+  background: rgba(247, 241, 230, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(193, 102, 47, 0.12);
+}
+
+.dark .glass-nav,
+.glass-nav-dark {
+  background: rgba(26, 19, 14, 0.88);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(217, 164, 65, 0.15);
+}
+
